@@ -1,4 +1,4 @@
-let score = 0; // 현재 점수
+let score = 1000; // 현재 점수
 let highScore = 0; // 최고 점수
 
 let lastScoreUpdateTime = Date.now(); // 마지막 점수 업데이트 시간
