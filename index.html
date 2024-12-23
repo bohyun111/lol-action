@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>롤 스킬피하기</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background-image: url('images/소환사_협곡_배경.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    #gameCanvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #muteButton {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #muteButton:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    /* 슬라이더와 볼륨 표시 */
+    #volumeControl {
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    #volumeSlider {
+      width: 200px;
+    }
+
+    #volumeLabel {
+      margin-left: 10px;
+      color: white;
+    }
+
+    /* Q 스킬 쿨타임 박스 스타일 (하단에 정사각형) */
+    #qCooldownBox, #wCooldownBox {
+  position: absolute;
+  bottom: 20px;
+  width: 100px;
+  height: 100px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+#qCooldownBox {
+  left: 20px; /* Q 박스는 왼쪽 */
+}
+
+#wCooldownBox {
+  left: 140px; /* W 박스는 Q 박스 오른쪽에 배치 */
+}
+
+    /* 엔딩 메시지 창 스타일 */
+    #endingMessage {
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      font-size: 24px;
+      font-family: Arial, sans-serif;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      display: none; /* 초기에는 보이지 않음 */
+      z-index: 9999;
+    }
+
+    #endingMessage button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #endingMessage button:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas"></canvas>
+  <button id="muteButton">음소거</button>
+
+  <div id="volumeControl">
+    <label for="volumeSlider" style="color: white;">음량: </label>
+    <input type="range" id="volumeSlider" min="0" max="100" value="50">
+    <span id="volumeLabel">50%</span>
+  </div>
+
+  <div id="qCooldownBox">
+    Q : <span id="qCooldownText">0s</span>
+  </div>
+  
+  <div id="wCooldownBox">
+    W : <span id="wCooldownText">0s</span>
+  </div>
+  
+  <!-- 엔딩 메시지 창 -->
+  <div id="endingMessage">
+    <p>게임 종료! 티모는 적들에게 패배했습니다. 다음엔 더 잘해보세요!</p>
+    <button onclick="resetGame()">다시 시작하기</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
